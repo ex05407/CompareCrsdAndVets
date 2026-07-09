@@ -153,6 +153,7 @@ namespace CompareCrsdAndVets.Project
             string MessageStr = string.Empty;
             string CrsdBaseDirPath = CommonMethods.GetParentPath(pCrsdFolderPath);
             string CrsdEventDirPath = Path.Combine(CrsdBaseDirPath, "Event");
+            List<string> CompareCrsdFiles = new List<string>();
             foreach (string VetsPath in VetsFilePathes)
             {
                 CompareData compareData = new CompareData(logger, UnitConvet);
@@ -189,6 +190,8 @@ namespace CompareCrsdAndVets.Project
                         NoOutputCount++;
                         continue;
                     }
+
+                    CompareCrsdFiles.Add(TdFilePath);
 
                     // CRSD-7000ファイルの読み込み
                     CrsdFileData CrsdFileData = ReadFile.LoadCrsdFile(logger, TdFilePath, Td2FilePath, out MessageStr);
@@ -244,6 +247,21 @@ namespace CompareCrsdAndVets.Project
                 }
             }
 
+            int CrsdNoExistCount = 0;
+            foreach(string crsdFile in Directory.GetFiles(pCrsdFolderPath, "*.td", SearchOption.TopDirectoryOnly))
+            {
+                if (!CompareCrsdFiles.Contains(crsdFile))
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(crsdFile);
+                    string Td2FilePath = crsdFile.ToUpper().Replace("TD", "TD2");
+                    FileInfo file = null;
+                    if (File.Exists(Td2FilePath)) file = new FileInfo(Td2FilePath);
+                    fileData.Add(CreateData.CreateExcelItem_FileData(pFileName: fileName, pTestModeName: fileName, pVetsPath: string.Empty,
+                        pTdPath: crsdFile, pTd2Path: file == null ? string.Empty : file.FullName, pMessage: "VETSに存在しないCRSD-7000ファイルです"));
+                    CrsdNoExistCount++;
+                }
+            }
+
             // 結果ファイルの保存
             SaveFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, FileName_OutputTsv), retData);
             // ファイル情報の保存
@@ -255,7 +273,7 @@ namespace CompareCrsdAndVets.Project
                 eventData.ConvertAll(x => string.Join("\t", x)), sJisEnc);
 
             // メッセージの作成
-            Mesage = string.Format(Common.Message.Info_CompareFile, SuccessCount, FailureCount, NoOutputCount);
+            Mesage = string.Format(Common.Message.Info_CompareFile, SuccessCount, FailureCount, NoOutputCount, CrsdNoExistCount);
 
             return true;
         }

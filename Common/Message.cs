@@ -8,7 +8,7 @@ namespace CompareCrsdAndVets.Common
     {
         internal const string Info_Start = "{0}を開始します。";
         internal const string Info_Complete = "{0}が完了しました。";
-        internal const string Info_CompareFile = "比較が完了しました。\n\n処理結果：\n成功：{0}件、失敗：{1}件、出力なし：{2}件";
+        internal const string Info_CompareFile = "比較が完了しました。\n\n処理結果：\n成功：{0}件、失敗：{1}件\r\n出力なし：{2}件、CRSDのみ：{3}件";
 
         internal const string Error_NoInput = "{0}が入力されていません";
         internal const string Error_NoSuchDir = "{0}フォルダが存在しません";
