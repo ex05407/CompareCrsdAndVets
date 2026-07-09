@@ -95,6 +95,9 @@ namespace CompareCrsdAndVets.Project
             retData.Add(CreateExcelItem(ref Result, pFileName: FileName, pItemName: "フェーズ種類", pCrsdVal: text, pVetsVal: string.Empty, pCheckResultFlg: false));
 #endif
 
+            // 速度単位
+            retData.Add(CreateExcelItem(ref Result, pFileName: FileName, pItemName: "速度単位", pCrsdVal: pCrsdFileData.DisplayUnits, pVetsVal: pVetsFileData.CycleSpeedUnits));
+
             // トレースの開始
             string vetsTraceStartMode = string.Empty;
             string TraceStartModeError = string.Empty;

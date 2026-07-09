@@ -101,8 +101,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="sample\4bagECE_Stage3_120_AT.td" />
-    <None Include="sample\4bagECE_Stage3_120_AT.td2" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -111,7 +109,6 @@
     <Content Include="Xml\QuantitiesUnits.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="sample\WHVC 3BAG.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
