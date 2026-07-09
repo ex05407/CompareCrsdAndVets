@@ -1,0 +1,11 @@
+C:\git\CompareApp\obj\Debug\CompareApp.csproj.AssemblyReference.cache
+C:\git\CompareApp\obj\Debug\CompareApp.csproj.GenerateResource.cache
+C:\git\CompareApp\obj\Debug\CompareApp.csproj.CoreCompileInputs.cache
+C:\git\CompareApp\bin\Debug\Xml\QuantitiesUnits.xml
+C:\git\CompareApp\bin\Debug\CompareCrsdAndVets.exe.config
+C:\git\CompareApp\bin\Debug\CompareCrsdAndVets.exe
+C:\git\CompareApp\bin\Debug\CompareCrsdAndVets.pdb
+C:\git\CompareApp\obj\Debug\CompareCrsdAndVets.Properties.Resources.resources
+C:\git\CompareApp\obj\Debug\CompareCrsdAndVets.exe
+C:\git\CompareApp\obj\Debug\CompareCrsdAndVets.pdb
+C:\git\CompareApp\obj\Debug\CompareCrsdAndVets.CompareForm.resources
