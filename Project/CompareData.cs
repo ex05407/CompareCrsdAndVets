@@ -118,9 +118,9 @@ namespace CompareCrsdAndVets.Project
             // データを確認
             //List<CrsdPhaseData> PhaseMinList = new List<CrsdPhaseData>();
             int MaxCount = Math.Max(pVetsFileData.CycleBlocks.Count, crsdPhase.PhaseList.Count);
-            BaseBlock baseBlock = null;
             for (int i = 0; i < MaxCount; i++)
             {
+                BaseBlock baseBlock = null;
                 List<CrsdPhaseData> PhaseMinList = null;
                 PhaseType PhaseMinType = PhaseType.Unknown;
                 if (i < crsdPhase.PhaseList.Count)
@@ -448,12 +448,12 @@ namespace CompareCrsdAndVets.Project
                 retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: pDriveUnitName, pEventName: EventName,
                         pItemName: "PendantButton", pCrsdVal: Phase.IsEmpty ? string.Empty : "Start", pVetsVal: Event.PendantButton));
             }
-            if ((!Phase.IsEmpty && (Phase.IsTimeTrigger || Event.IsTimeTrigger)))
+            if ((Phase.IsTimeTrigger || Event.IsTimeTrigger))
             {
                 retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: pDriveUnitName, pEventName: EventName,
                         pItemName: "時間(s)", pVetsVal: Event.IsTimeTrigger ? Event.Time.ToString() : string.Empty,
-                        pCrsdVal: Phase.IsTimeTrigger ? (Phase.TriggerName == TriggerName_Time ? Phase.StartTime.ToString() : 0.ToString()) : string.Empty,
-                        pNote: !Phase.IsTimeError ? string.Empty : string.Format(Message.Error_NoNumber, "時間"), pIsNuber: true));
+                        pCrsdVal: !Phase.IsEmpty && Phase.IsTimeTrigger ? (Phase.TriggerName == TriggerName_Time ? Phase.StartTime.ToString() : 0.ToString()) : string.Empty,
+                        pNote: !Phase.IsEmpty && !Phase.IsTimeError ? string.Empty : string.Format(Message.Error_NoNumber, "時間"), pIsNuber: true));
             }
 
             // イベントアクションの設定
