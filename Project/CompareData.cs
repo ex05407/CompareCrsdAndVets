@@ -319,7 +319,7 @@ namespace CompareCrsdAndVets.Project
             CrsdPhaseData PhaseFirst = new CrsdPhaseData();
             bool IsExistPhase = (pPhaseList.Count == 0);
             if (pPhaseList.Count != 0) PhaseFirst = pPhaseList.First();
-
+            bool IsExistBlock = string.IsNullOrEmpty(block.Name);
 
             // ドライブユニット名を設定
             string DriveUnitName = string.Concat(BlockName_DriveUnit, pDriveUnitCount);
@@ -327,20 +327,27 @@ namespace CompareCrsdAndVets.Project
             // 速度許容差
             double ViolationSpeedTolerance = ConvertUnit(block.ViolationSpeedTolerance, "Speed", pCycleSpeedUnits);
             double CrsdSpeedTolerance = -1;
+            string note = string.Empty;
+            if (IsExistPhase) note = string.Format(Message.Error_NoExistCrsd, "ブロック");
+            else if (IsExistBlock) note = string.Format(Message.Error_NoExistVets, "ブロック");
+            else note = CheckDouble(pCrsdFileData.SpeedTolerance, $"速度許容差({pCycleSpeedUnits})");
             if (!IsExistPhase) CrsdSpeedTolerance = ToDouble(pCrsdFileData.SpeedTolerance, -1);
             if (CrsdSpeedTolerance != -1 && pCrsdFileData.DisplayUnits != pCycleSpeedUnits) CrsdSpeedTolerance = ConvertUnit(CrsdSpeedTolerance, pCrsdFileData.DisplayUnits, pCycleSpeedUnits);
             retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: DriveUnitName, pItemName: $"速度許容差({pCycleSpeedUnits})",
-                pCrsdVal: IsExistPhase || CrsdSpeedTolerance == -1 ? string.Empty : CrsdSpeedTolerance.ToString("0.0"), pVetsVal: ViolationSpeedTolerance.ToString("0.0"),
-                pNote: IsExistPhase ? string.Format(Message.Error_NoExistCrsd, "ブロック") : CheckDouble(pCrsdFileData.SpeedTolerance, $"速度許容差({pCycleSpeedUnits})")));
+                pCrsdVal: IsExistPhase || CrsdSpeedTolerance == -1 ? string.Empty : CrsdSpeedTolerance.ToString("0.0"), 
+                pVetsVal: IsExistBlock ? string.Empty : ViolationSpeedTolerance.ToString("0.0"), pNote: note));
 
             // 時間許容差
             retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: DriveUnitName, pItemName: "時間許容差(s)",
-                pCrsdVal: IsExistPhase ? string.Empty : pCrsdFileData.TimeTolerance, pVetsVal: block.ViolationTimeTolerance.ToString("0.0")));
+                pCrsdVal: IsExistPhase ? string.Empty : pCrsdFileData.TimeTolerance, 
+                pVetsVal: IsExistBlock ? string.Empty : block.ViolationTimeTolerance.ToString("0.0")));
 
             // トレース開始
             retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: DriveUnitName, pItemName: "トレースの開始",
                 //pCrsdVal: PhaseFirst.TraceStartMode, pVetsVal: block.TraceStartMode, pNote: PhaseFirst.TraceStartModeError));
-                pCrsdVal: PhaseFirst.EventData.TraceStartMode, pVetsVal: block.TraceStartMode, pNote: PhaseFirst.EventData.TraceStartModeError));
+                pCrsdVal: IsExistPhase ? string.Empty : PhaseFirst.EventData.TraceStartMode, 
+                pVetsVal: IsExistBlock ? string.Empty : block.TraceStartMode,
+                pNote: IsExistPhase ? string.Empty : PhaseFirst.EventData.TraceStartModeError));
 
             // イベント情報の設定
             var events = block.Events.Where(x => x.EventActions.Exists(a => a.Name == "EmissionSample" || a.Name == string.Empty));
@@ -354,7 +361,7 @@ namespace CompareCrsdAndVets.Project
                 CrsdPhaseData Phase = null;
                 if (i < phases.Count()) Phase = phases.ElementAt(i);
                 else Phase = new CrsdPhaseData();
-                retData.AddRange(CreateEvent(ref oResult, Event, block.Events, Phase, pPhaseList, pFileName, DriveUnitName, i + 1, PhaseFirst.IsEmpty));
+                retData.AddRange(CreateEvent(ref oResult, Event, block.Events, Phase, pPhaseList, pFileName, DriveUnitName, i + 1, IsExistPhase, IsExistBlock));
             }
 
             return retData;
@@ -376,10 +383,14 @@ namespace CompareCrsdAndVets.Project
             string SoakMinTime = pCrsdPhaseData == null ? string.Empty : pCrsdPhaseData.SoakMinTime;
             string SoakMaxTime = pCrsdPhaseData == null ? string.Empty : pCrsdPhaseData.SoakMaxTime;
 
+            string note = string.Empty;
+            if (pCrsdPhaseData == null) note = string.Format(Message.Error_NoExistCrsd, "ブロック");
+            else if (block == null) note = string.Format(Message.Error_NoExistVets, "ブロック");
+
             // 最小時間
             retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: BlockName_Soak, pItemName: "最小時間 (s)",
                 pCrsdVal: SoakMinTime, pVetsVal: block == null ? string.Empty : block.MinimumDuration.ToString("0.0"),
-                pNote: pCrsdPhaseData == null ? string.Format(Message.Error_NoExistCrsd, "ブロック") : CheckDouble(SoakMinTime, "最小時間"), pIsNuber: true));
+                pNote: note == string.Empty ? CheckDouble(SoakMinTime, "最小時間") : note, pIsNuber: true));
             // 最大時間
             retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: BlockName_Soak, pItemName: "最大時間 (s)",
                 pCrsdVal: SoakMaxTime, pVetsVal: block == null ? string.Empty : block.MaximumDuration.ToString("0.0"),
@@ -402,11 +413,16 @@ namespace CompareCrsdAndVets.Project
         {
             List<string[]> retData = new List<string[]>();
 
+            string note = string.Empty;
+            if (pCrsdPhaseData == null) note = string.Format(Message.Error_NoExistCrsd, "ブロック");
+            else if (block == null) note = string.Format(Message.Error_NoExistVets, "ブロック");
+            else note = CheckDouble(pCrsdPhaseData.PhaseTime, "最大時間");
+
             // 時間
             retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: BlockName_IdleCheck, pItemName: "時間 (s)",
                 pCrsdVal: pCrsdPhaseData == null ? string.Empty : pCrsdPhaseData.PhaseTime, 
                 pVetsVal: block == null ? string.Empty : block.MeasurementTime.ToString("0.0"),
-                pNote: pCrsdPhaseData == null ? string.Empty : CheckDouble(pCrsdPhaseData.PhaseTime, "最大時間"), pIsNuber: true));
+                pNote: note, pIsNuber: true));
 
             return retData;
         }
@@ -423,7 +439,7 @@ namespace CompareCrsdAndVets.Project
         /// <param name="pEventCount"></param>
         /// <returns></returns>
         private List<string[]> CreateEvent(ref bool oResult, EventDefinition Event, List<EventDefinition> EventList,
-            CrsdPhaseData Phase, List<CrsdPhaseData> pPhaseList, string pFileName, string pDriveUnitName, int pEventCount, bool IsPhaseEmpty)
+            CrsdPhaseData Phase, List<CrsdPhaseData> pPhaseList, string pFileName, string pDriveUnitName, int pEventCount, bool IsPhaseEmpty, bool IsBlockEmpty)
         {
             List<string[]> retData = new List<string[]>();
             bool IsStart = false;
@@ -434,11 +450,8 @@ namespace CompareCrsdAndVets.Project
 
             // トリガーの設定
             string Note = string.Empty;
-            if (!IsPhaseEmpty)
-            {
-                if (Phase.IsEmpty) Note = string.Format(Message.Error_NoExistCrsd, "イベント");
-                if (NoEventFlg) Note = string.Format(Message.Error_NoExistVets, "イベント");
-            }
+            if(!IsPhaseEmpty && Phase.IsEmpty) Note = string.Format(Message.Error_NoExistCrsd, "イベント");
+            if(!IsBlockEmpty && NoEventFlg) Note = string.Format(Message.Error_NoExistVets, "イベント");
 
             retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: pDriveUnitName, pEventName: EventName,
                 pItemName: "トリガー", pCrsdVal: Phase.IsEmpty ? string.Empty : Phase.TriggerName, pVetsVal: Event.TriggerName, pNote: Note));
@@ -450,10 +463,13 @@ namespace CompareCrsdAndVets.Project
             }
             if ((Phase.IsTimeTrigger || Event.IsTimeTrigger))
             {
+                string note = string.Empty;
+                if (!Phase.IsEmpty && Phase.IsTimeError) note = string.Format(Message.Error_NoNumber, "時間");
+
                 retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: pDriveUnitName, pEventName: EventName,
                         pItemName: "時間(s)", pVetsVal: Event.IsTimeTrigger ? Event.Time.ToString() : string.Empty,
                         pCrsdVal: !Phase.IsEmpty && Phase.IsTimeTrigger ? (Phase.TriggerName == TriggerName_Time ? Phase.StartTime.ToString() : 0.ToString()) : string.Empty,
-                        pNote: !Phase.IsEmpty && !Phase.IsTimeError ? string.Empty : string.Format(Message.Error_NoNumber, "時間"), pIsNuber: true));
+                        pNote: note, pIsNuber: true));
             }
 
             // イベントアクションの設定
