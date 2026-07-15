@@ -14,6 +14,14 @@ namespace CompareCrsdAndVets.Class
     /// </summary>
     internal class CrsdFileData : CrsdBase
     {
+        /// <summary>ファイル名</summary>
+        public string FileName { get; set; } = string.Empty;
+        /// <summary>Tdファイルのパス</summary>
+        public string TdFilePath { get; set; } = string.Empty;
+        /// <summary>Td2ファイルのパス</summary>
+        public string Td2FilePath { get; set; } = string.Empty;
+
+        /// <summary>単位</summary>
         private string _DisplayUnits;
         /// <summary>単位</summary>
         public string DisplayUnits 
@@ -30,6 +38,9 @@ namespace CompareCrsdAndVets.Class
         public string EventListDir { get; set; }
         /// <summary>イベントリストのデータ</summary>
         public CrsdEventListData EventListData { get; set; } = new CrsdEventListData();
+        /// <summary>PhaseType＝"Normal"のフェーズリスト</summary>
+        public List<CrsdPhaseData> NormalPhaseList { get => Phases.Where(a => a.PhaseTypeEnum == Const.PhaseType.Normal).ToList(); }
+
         /// <summary>最初のイベント</summary>
         private CrsdEventData _FirstEvent;
         /// <summary>最初のイベント</summary>
@@ -51,6 +62,8 @@ namespace CompareCrsdAndVets.Class
                 return null;
             }
         }
+
+        /// <summary>トレース開始</summary>
         public string TraceStartMode
         {
             get
@@ -59,6 +72,8 @@ namespace CompareCrsdAndVets.Class
                 else return FirstEvent.TraceStartMode;
             }
         }
+
+        /// <summary>トレース開始エラー</summary>
         public string TraceStartModeError
         {
             get
@@ -90,6 +105,9 @@ namespace CompareCrsdAndVets.Class
         /// <exception cref="FileNotFoundException"></exception>
         public void LoadTd(string filePath)
         {
+            TdFilePath = filePath;
+            FileName = Path.GetFileNameWithoutExtension(filePath);
+
             var valuesBySection = ParseIniLikeFile(filePath);
 
             Dictionary<string, string> header;
@@ -125,6 +143,7 @@ namespace CompareCrsdAndVets.Class
         /// <exception cref="FileNotFoundException"></exception>
         public void LoadTd2(string filePath)
         {
+            Td2FilePath = filePath;
             Phases.Clear();
 
             var valuesBySection = ParseIniLikeFile(filePath);

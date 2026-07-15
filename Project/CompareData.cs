@@ -19,7 +19,7 @@ namespace CompareCrsdAndVets.Project
         Logger logger;
 
         /// <summary>単位変換用クラス</summary>
-        QuantitiesUnitsTable UnitConvet;
+        QuantitiesUnitsTable UnitConvert;
         #endregion
 
         #region "クラス"
@@ -62,7 +62,7 @@ namespace CompareCrsdAndVets.Project
         public CompareData(Logger logger, QuantitiesUnitsTable unitConvert)
         {
             this.logger = logger;
-            this.UnitConvet = unitConvert;
+            this.UnitConvert = unitConvert;
         }
         #endregion
 
@@ -73,7 +73,7 @@ namespace CompareCrsdAndVets.Project
         /// <param name="pCrsdFileData"></param>
         /// <param name="pVetsFileData"></param>
         /// <returns></returns>
-        public List<string[]> CreateExcelData(CrsdFileData pCrsdFileData, TestProcedure pVetsFileData)
+        public List<string[]> CreateExcelData(CrsdFileData pCrsdFileData, TestProcedure pVetsFileData, out string[] SampleTimes)
         {
             List<string[]> retData = new List<string[]>();
             string FileName = pVetsFileData.TestModeFileName;
@@ -84,6 +84,25 @@ namespace CompareCrsdAndVets.Project
             int IdleCheckCount = 0;
             CrsdEx crsdPhase = CreatePhaseBlock(pCrsdFileData);
             //ConvertItem(pVetsFileData);
+
+            // サンプル時間の設定
+            SampleTimes = CreateData.CreateExcelItem_SampleData(pVetsFileData, pCrsdFileData);
+            int MaxCount = Math.Max(pVetsFileData.EventTimeList.Count, pCrsdFileData.NormalPhaseList.Count);
+            for(int i = 0;i < MaxCount;i++)
+            {
+                string Note = string.Empty;
+
+                TestProcedure.EventTimeEx EventtimeData = null;
+                if (pVetsFileData.EventTimeList.Count > i) EventtimeData = pVetsFileData.EventTimeList[i];
+                else Note = $"{Const.VetsName}のサンプル時間が存在しません";
+
+                CrsdPhaseData PhaseData = null;
+                if (pCrsdFileData.NormalPhaseList.Count > i) PhaseData = pCrsdFileData.NormalPhaseList[i];
+                else Note = $"{Const.CrsdName}のサンプル時間が存在しません"; 
+
+                retData.Add(CreateExcelItem(ref Result, pFileName: FileName, pItemName: "サンプル時間", pNote:Note, pIsNuber:true,
+                    pCrsdVal: PhaseData == null ? string.Empty : PhaseData.PhaseTime, pVetsVal: EventtimeData == null ? string.Empty : EventtimeData.SampleTime.ToString()));
+            }
 
 #if DEBUG
             string text = string.Empty;
@@ -117,7 +136,7 @@ namespace CompareCrsdAndVets.Project
 
             // データを確認
             //List<CrsdPhaseData> PhaseMinList = new List<CrsdPhaseData>();
-            int MaxCount = Math.Max(pVetsFileData.CycleBlocks.Count, crsdPhase.PhaseList.Count);
+            MaxCount = Math.Max(pVetsFileData.CycleBlocks.Count, crsdPhase.PhaseList.Count);
             for (int i = 0; i < MaxCount; i++)
             {
                 BaseBlock baseBlock = null;
@@ -325,14 +344,15 @@ namespace CompareCrsdAndVets.Project
             string DriveUnitName = string.Concat(BlockName_DriveUnit, pDriveUnitCount);
 
             // 速度許容差
-            double ViolationSpeedTolerance = ConvertUnit(block.ViolationSpeedTolerance, "Speed", pCycleSpeedUnits);
+            double ViolationSpeedTolerance = UnitConvert.ConvertUnit(block.ViolationSpeedTolerance, "Speed", pCycleSpeedUnits);
             double CrsdSpeedTolerance = -1;
             string note = string.Empty;
             if (IsExistPhase) note = string.Format(Message.Error_NoExistCrsd, "ブロック");
             else if (IsExistBlock) note = string.Format(Message.Error_NoExistVets, "ブロック");
             else note = CheckDouble(pCrsdFileData.SpeedTolerance, $"速度許容差({pCycleSpeedUnits})");
             if (!IsExistPhase) CrsdSpeedTolerance = ToDouble(pCrsdFileData.SpeedTolerance, -1);
-            if (CrsdSpeedTolerance != -1 && pCrsdFileData.DisplayUnits != pCycleSpeedUnits) CrsdSpeedTolerance = ConvertUnit(CrsdSpeedTolerance, pCrsdFileData.DisplayUnits, pCycleSpeedUnits);
+            if (CrsdSpeedTolerance != -1 && pCrsdFileData.DisplayUnits != pCycleSpeedUnits) 
+                CrsdSpeedTolerance = UnitConvert.ConvertUnit(CrsdSpeedTolerance, pCrsdFileData.DisplayUnits, pCycleSpeedUnits);
             retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: DriveUnitName, pItemName: $"速度許容差({pCycleSpeedUnits})",
                 pCrsdVal: IsExistPhase || CrsdSpeedTolerance == -1 ? string.Empty : CrsdSpeedTolerance.ToString("0.0"), 
                 pVetsVal: IsExistBlock ? string.Empty : ViolationSpeedTolerance.ToString("0.0"), pNote: note));
@@ -350,9 +370,60 @@ namespace CompareCrsdAndVets.Project
                 pNote: IsExistPhase ? string.Empty : PhaseFirst.EventData.TraceStartModeError));
 
             // イベント情報の設定
-            var events = block.Events.Where(x => x.EventActions.Exists(a => a.Name == "EmissionSample" || a.Name == string.Empty));
+            var events = block.Events.Where(x => x.IsEmissionSample);
             var phases = pPhaseList.Where(x => x.PhaseTypeEnum != PhaseType.Warmup);
-            int EventMaxCount = Math.Max(events.Count(), phases.Count());
+            int EventMaxCount = Math.Min(events.Count(), phases.Count());
+            CrsdPhaseData beforePhase = new CrsdPhaseData();
+            string CrsdSampleTime = string.Empty;
+            string VetsSampleTime = string.Empty;
+
+            /*
+            for(int i = 0;i < EventMaxCount;i++)
+            {
+
+            }
+
+            for (int i = 0; i < EventMaxCount; i++)
+            {
+                EventDefinition Event = null;
+                if (i < events.Count()) Event = events.ElementAt(i);
+
+                CrsdPhaseData Phase = null;
+                if (i < phases.Count()) Phase = phases.ElementAt(i);
+
+                if (Event != null && Event.IsTimeTrigger && i != 0)
+                {
+                    CrsdSampleTime = IsExistPhase || beforePhase == null || beforePhase.PhaseTypeEnum != PhaseType.Normal ? string.Empty : beforePhase.PhaseTime;
+                    Event.id
+
+                    retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: DriveUnitName, pItemName: "サンプル時間",
+                        pCrsdVal: CrsdSampleTime, pVetsVal: VetsSampleTime, pIsNuber: true));
+                }
+                else if (beforePhase.PhaseTypeEnum == PhaseType.Normal)
+                {
+                    CrsdSampleTime = beforePhase.PhaseTime;
+                    VetsSampleTime = string.Empty;
+
+                    retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: DriveUnitName, pItemName: "サンプル時間",
+                        pCrsdVal: CrsdSampleTime, pVetsVal: VetsSampleTime, pIsNuber: true));
+                }
+
+                //if (Phase != null && Phase.PhaseTypeEnum == PhaseType.Warmup || Phase.PhaseTypeEnum == PhaseType.Normal) beforePhase = Phase;
+                beforePhase = Phase;
+            }
+            */
+
+            if (EventMaxCount != phases.Count() && beforePhase.PhaseTypeEnum == PhaseType.Normal)
+            {
+                CrsdSampleTime = beforePhase.PhaseTime;
+                VetsSampleTime = string.Empty;
+
+                retData.Add(CreateExcelItem(ref oResult, pFileName: pFileName, pBlockName: DriveUnitName, pItemName: "サンプル時間",
+                    pCrsdVal: CrsdSampleTime, pVetsVal: VetsSampleTime, pIsNuber: true));
+            }
+
+
+            EventMaxCount = Math.Max(events.Count(), phases.Count());
             for (int i = 0; i < EventMaxCount; i++)
             {
                 EventDefinition Event = null;
@@ -528,31 +599,6 @@ namespace CompareCrsdAndVets.Project
         }
         #endregion
 
-        #region "トレーススタートのデータ作成"
-        /// <summary>
-        /// Excel出力用のデータを作成する
-        /// </summary>
-        /// <param name="oResult"></param>
-        /// <param name="pFileName"></param>
-        /// <param name="pBlockName"></param>
-        /// <param name="pEventName"></param>
-        /// <param name="pActionName"></param>
-        /// <param name="pItemName"></param>
-        /// <param name="pResult"></param>
-        /// <param name="pCrsdVal"></param>
-        /// <param name="pVetsVal"></param>
-        /// <param name="pNote"></param>
-        /// <returns></returns>
-        public string[] CreateExcelItem_TraceStartData(string pFileName = "", string pTraceStart = "-")
-        {
-            string[] strings = new string[OutputTraceStartExcelCol];
-            strings[(int)ExcelCols_TraceStart.Name - 1] = pFileName;
-            strings[(int)ExcelCols_TraceStart.TraceStart - 1] = pTraceStart;
-
-            return strings;
-        }
-        #endregion
-
         #region "イベントアクションの設定（開始）"
         /// <summary>
         /// イベントアクションの設定（開始）
@@ -712,7 +758,8 @@ namespace CompareCrsdAndVets.Project
                                     StartTime = time_All,
                                     IsTimeError = IsError,
                                     BeforePhaseNo = BeforePhaseNo,
-                                    BeforeBagPairNo = BeforeBagPairNo
+                                    BeforeBagPairNo = BeforeBagPairNo,
+                                    PhaseTime = phase.PhaseTime
                                 });
                             }
 
@@ -750,43 +797,29 @@ namespace CompareCrsdAndVets.Project
             }
             else
             {
-                PhaseMinList.Add(new CrsdPhaseData()
+                CrsdPhaseData traceFinishPhase = new CrsdPhaseData()
                 {
                     TriggerName = "TraceFinish",
                     StartTime = time_All,
                     IsTimeError = IsError,
                     BeforePhaseNo = BeforePhaseNo,
-                    BeforeBagPairNo = BeforeBagPairNo
-                });
+                    BeforeBagPairNo = BeforeBagPairNo,
+                    PhaseTime = "0"
+                };
+                if(PhaseMinList.Exists(a => a.PhaseTypeEnum == PhaseType.Normal || a.PhaseTypeEnum == PhaseType.Warmup))
+                {
+                    traceFinishPhase.PhaseTime = 
+                        (traceFinishPhase.StartTime - PhaseMinList.Where(a => a.PhaseTypeEnum == PhaseType.Normal || a.PhaseTypeEnum == PhaseType.Warmup).Last().StartTime).ToString();
+                }
+                else
+                {
+                    traceFinishPhase.PhaseTime = traceFinishPhase.StartTime.ToString();
+                }
+                PhaseMinList.Add(traceFinishPhase);
                 crsdEx.SetPhaseList(PhaseMinList, BeforePhase);
             }
 
             return crsdEx;
-        }
-        #endregion
-
-        #region "単位変換"
-        /// <summary>
-        /// 単位の変換
-        /// </summary>
-        /// <param name="pBaseValue"></param>
-        /// <param name="pBaseUnitName"></param>
-        /// <param name="pConvertUnitName"></param>
-        /// <returns></returns>
-        private double ConvertUnit(double pBaseValue, string pBaseUnitName, string pConvertUnitName)
-        {
-            // 速度許容差の基準単位確認
-            var speed = UnitConvet.Quantities.FirstOrDefault(q => q.Name == pBaseUnitName);
-            var baseUnitName = speed?.BaseUnitName;
-
-            // 換算係数を取得
-            var baseUnit = UnitConvet.BaseUnits.FirstOrDefault(b => b.Name == baseUnitName);
-            var kmh = baseUnit?.Units.FirstOrDefault(u => u.Name == pConvertUnitName);
-
-            double gain = kmh?.Gain ?? 1.0;
-            double offset = kmh?.Offset ?? 0.0;
-
-            return pBaseValue * gain + offset;
         }
         #endregion
 
@@ -801,34 +834,6 @@ namespace CompareCrsdAndVets.Project
             }
             return false;
         }
-        #endregion
-
-        #region "TODO:修正要"
-        /*
-        private void ConvertItem(TestProcedure pVetsFileData)
-        {
-            List<double> list = new List<double>();
-            foreach (BaseBlock block in pVetsFileData.CycleBlocks)
-            {
-                // ドライブユニットの場合のみの処理
-                if (block.GetType() != typeof(DriveUnitBlock)) continue;
-
-                DriveUnitBlock driveUnit = (DriveUnitBlock)block;
-                foreach (EventDefinition eventDefinition in driveUnit.Events)
-                {
-                    if (eventDefinition.TriggerName == "Time")
-                    {
-                        list.Add(eventDefinition.Time);
-                    }
-                    else if (eventDefinition.TriggerName == "TraceFinish")
-                    {
-                        // トレースファイルの確認
-
-                    }
-                }
-            }
-        }
-        */
         #endregion
 
     }

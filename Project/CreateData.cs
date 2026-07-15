@@ -1,10 +1,9 @@
-﻿using System;
+﻿using CompareCrsdAndVets.Class;
+using CompareCrsdAndVets.Common;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static CompareCrsdAndVets.Common.Const;
 using static CompareCrsdAndVets.Common.CommonMethods;
+using static CompareCrsdAndVets.Common.Const;
 
 namespace CompareCrsdAndVets.Project
 {
@@ -66,6 +65,47 @@ namespace CompareCrsdAndVets.Project
         }
         #endregion
 
+        #region "1行ごとのExcel出力データ作成(Vetsのみ)"
+        /// <summary>
+        /// Vetsの情報のみのExcel出力用のデータを作成する
+        /// </summary>
+        /// <returns></returns>
+        public static List<string[]> CreateExcelItem_OnlyTestProcedure(TestProcedure testProcedure)
+        {
+            bool tmp = false;
+            List<string[]> mainData = new List<string[]>();
+            string FileName = string.Concat(testProcedure.FileName, "(※)");
+            string TestModeFileName = string.Empty;
+            string FileNameError = string.Empty;
+            if (testProcedure.TestModeFileName != string.Empty)
+            {
+                TestModeFileName = testProcedure.TestModeFileName;
+                FileNameError = string.Format(Message.Error_NoExistCrsd, "テストモードファイル名");
+            }
+            else
+            {
+                TestModeFileName = "※記載なし";
+                FileNameError = string.Format(Message.Error_NoInput, "テストモードファイル名"); 
+            }
+
+            // ファイル名を設定
+            mainData.Add(CreateData.CreateExcelItem(ref tmp, pFileName: FileName, pItemName: "ファイル名",
+                        pCrsdVal: TestModeFileName, pVetsVal: testProcedure.FileName, pCheckResultFlg: false, pNote: FileNameError));
+
+            // サンプル時間を設定
+            if (testProcedure != null && testProcedure.CycleBlocks != null)
+            {
+                foreach (TestProcedure.EventTimeEx EventtimeData in testProcedure.EventTimeList)
+                {
+                    mainData.Add(CreateData.CreateExcelItem(ref tmp, pFileName: FileName,
+                        pItemName: "サンプル時間", pVetsVal: EventtimeData.SampleTime.ToString(), pCheckResultFlg: false));
+                }
+            }
+
+            return mainData;
+        }
+        #endregion
+
         #region "1行ごとのExcel出力データ作成(ファイル情報出力用)"
         /// <summary>
         /// Excel出力用のデータを作成する
@@ -92,6 +132,78 @@ namespace CompareCrsdAndVets.Project
             strings[(int)ExcelCols_FileData.Td2Path - 1] = pTd2Path;
             strings[(int)ExcelCols_FileData.EventPath - 1] = pEventPath;
             strings[(int)ExcelCols_FileData.Message - 1] = pMessage;
+
+            return strings;
+        }
+        #endregion
+
+        #region "1行ごとのExcel出力データ作成(トレース開始情報出力用)"
+        /// <summary>
+        /// Excel出力用のデータを作成する
+        /// </summary>
+        /// <returns></returns>
+        public static string[] CreateExcelItem_TraceStartData(string pFileName = "", string pTestModeName = "-", string pTraceStart = "-")
+        {
+            string[] strings = new string[OutputTraceStartExcelCol];
+            strings[(int)ExcelCols_TraceStart.Name - 1] = pFileName;
+            strings[(int)ExcelCols_TraceStart.TestModeName - 1] = pTestModeName;
+            strings[(int)ExcelCols_TraceStart.TraceStart - 1] = pTraceStart;
+
+            return strings;
+        }
+        #endregion
+
+        #region "1行ごとのExcel出力データ作成(サンプル情報出力用)"
+        /// <summary>
+        /// Excel出力用のデータを作成する
+        /// </summary>
+        /// <returns></returns>
+        public static string[] CreateExcelItem_SampleData(TestProcedure testProcedure, CrsdFileData crsdFileData)
+        {
+            string[] strings = new string[11];
+            strings[0] = testProcedure.Name;
+            strings[1] = testProcedure.TestModeFileName;
+            string ErrorMessage = string.Empty;
+
+            // CRSDの情報を設定
+            int count = 0;
+            if( crsdFileData != null && crsdFileData.Phases != null)
+            {
+                foreach (var phase in crsdFileData.NormalPhaseList)
+                {
+                    if (count >= SampleMaxNum)
+                    {
+                        ErrorMessage = $"{Const.Title_CrsdVal}のサンプル時間が、最大値を超過しています";
+                        break;
+                    }
+
+                    strings[Const.SampleStart_Crsd + count] = phase.PhaseTime;
+                    count++;
+                }
+            }
+
+            // VETSの情報を設定
+            if (testProcedure != null && testProcedure.CycleBlocks != null)
+            {
+                count = 0;
+                foreach(TestProcedure.EventTimeEx EventtimeData in testProcedure.EventTimeList)
+                {
+                    if (count >= SampleMaxNum)
+                    {
+                        if (string.IsNullOrEmpty(ErrorMessage)) ErrorMessage = $"{Const.VetsName}のサンプル時間が、最大値を超過しています";
+                        else ErrorMessage = "サンプル時間が、最大値を超過しています";
+                        break;
+                    }
+
+                    strings[Const.SampleStart_Vets + count] = EventtimeData.SampleTime.ToString();
+                    if(EventtimeData.ErrorMessage != string.Empty)
+                    {
+                        ErrorMessage = EventtimeData.ErrorMessage;
+                    }
+                    count++;
+                }
+            }
+            strings[10] = ErrorMessage;
 
             return strings;
         }

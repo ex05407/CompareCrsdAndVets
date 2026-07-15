@@ -16,6 +16,15 @@ namespace CompareCrsdAndVets.Class
         /// イベントアクション名</summary>
         public string Name { get; set; }
 
+        /// <summary>開始アクションか否か</summary>
+        public bool IsStartAction { get => Name == "EmissionSample"; }
+
+        /// <summary>終了アクションか否か</summary>
+        public bool IsEndAction { get => Name == "" && StartActionId != -1; }
+
+        /// <summary>エラーメッセージ</summary>
+        public string ErrorMessage { get; set; } = string.Empty;
+
         /// <summary>
         /// パラメータリスト
         /// </summary>
@@ -93,7 +102,7 @@ namespace CompareCrsdAndVets.Class
             {
                 if (_startActionId == null)
                 {
-                    _startActionId = ToInt(GetParameterValue("StartActionId"));
+                    _startActionId = ToInt(GetParameterValue("StartActionId"), -1);
                 }
 
                 return _startActionId.Value;

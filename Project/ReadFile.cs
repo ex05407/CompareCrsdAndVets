@@ -1,13 +1,10 @@
 ﻿using CompareCrsdAndVets.Class;
 using CompareCrsdAndVets.Common;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static CompareCrsdAndVets.Common.Const;
+using Trace = CompareCrsdAndVets.Class.Trace;
 
 namespace CompareCrsdAndVets.Project
 {
@@ -31,19 +28,101 @@ namespace CompareCrsdAndVets.Project
             }
             catch
             {
-                oMessage = string.Format(Common.Message.Error_ReadFile, Const.VetsName);
+                oMessage = string.Format(Common.Message.Error_ReadFileDetail, Const.VetsName, Const.TestProcedure);
                 logger.OutputLog($"{oMessage} ファイルパス：{pFilePath}", Logger.LogType.Error);
                 return null;
             }
 
+            /*
             if (string.IsNullOrEmpty(VetsProcedure.TestModeFileName))
             {
                 oMessage = string.Format(Common.Message.Error_EmptyData, "テストモードファイル名");
                 logger.OutputLog($"{oMessage} ファイルパス：{pFilePath}", Logger.LogType.Warning);
                 return null;
             }
+            */
 
             return VetsProcedure;
+        }
+        #endregion
+
+        #region "VETSトレースファイルの読み込み"
+        /// <summary>
+        /// VETSトレースファイルの読み込み
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="pTraceFilePath"></param>
+        /// <param name="oMessage"></param>
+        /// <returns></returns>
+        internal static Trace LoadVetsTraceFile(Logger logger, string pFilePath, out string oMessage)
+        {
+            oMessage = string.Empty;
+            Trace trace = new Trace();
+            trace.FilePath_Main = pFilePath;
+
+            try
+            {
+                // トレースファイルの読み込み
+                trace.LoadMainXml();
+            }
+            catch
+            {
+                oMessage = string.Format(Common.Message.Error_ReadFileDetail, Const.VetsName, Const.Trace);
+                logger.OutputLog($"{oMessage} ファイルパス：{pFilePath}", Logger.LogType.Error);
+                return null;
+            }
+
+            if(string.IsNullOrEmpty(trace.FilePath_TraceVectors))
+            {
+                oMessage = string.Format(Common.Message.Error_EmptyData, Const.TraceVectors);
+                logger.OutputLog($"{oMessage} ファイルパス：{pFilePath}", Logger.LogType.Warning);
+                return null;
+            }
+            else if (!File.Exists(trace.FilePath_TraceVectors))
+            {
+                oMessage = string.Format(Common.Message.Error_NoSuchFileDetail, Const.VetsName, Const.Trace, Const.TraceVectors);
+                logger.OutputLog($"{oMessage} ファイルパス：{trace.FilePath_TraceVectors}", Logger.LogType.Warning);
+                return null;
+            }
+
+            try
+            {
+                // TraceVectorsファイルの読み込み
+                trace.LoadTraceVectorsXml();
+            }
+            catch
+            {
+                oMessage = string.Format(Common.Message.Error_ReadFileDetail, Const.VetsName, Const.TraceVectors);
+                logger.OutputLog($"{oMessage} ファイルパス：{trace.FilePath_TraceVectors}", Logger.LogType.Error);
+                return null;
+            }
+
+            if (string.IsNullOrEmpty(trace.FilePath_MassData))
+            {
+                oMessage = string.Format(Common.Message.Error_EmptyData, Const.MassData);
+                logger.OutputLog($"{oMessage} ファイルパス：{pFilePath}", Logger.LogType.Warning);
+                return null;
+            }
+            else if (!File.Exists(trace.FilePath_MassData))
+            {
+                oMessage = string.Format(Common.Message.Error_NoSuchFileDetail, Const.VetsName, Const.Trace, Const.MassData);
+                logger.OutputLog($"{oMessage} ファイルパス：{trace.FilePath_MassData}", Logger.LogType.Warning);
+                return null;
+            }
+
+            try
+            {
+                // MassDataファイルの読み込み
+                trace.LoadMassDataBin();
+            }
+            catch
+            {
+                oMessage = string.Format(Common.Message.Error_ReadFileDetail, Const.VetsName, Const.MassData);
+                logger.OutputLog($"{oMessage} ファイルパス：{trace.FilePath_MassData}", Logger.LogType.Error);
+                return null;
+            }
+
+            return trace;
         }
         #endregion
 

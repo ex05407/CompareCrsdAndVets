@@ -133,6 +133,31 @@ namespace CompareCrsdAndVets.Class
 
             return displayNameNode.Value;
         }
+
+        #region "単位変換"
+        /// <summary>
+        /// 単位の変換
+        /// </summary>
+        /// <param name="pBaseValue"></param>
+        /// <param name="pBaseUnitName"></param>
+        /// <param name="pConvertUnitName"></param>
+        /// <returns></returns>
+        public double ConvertUnit(double pBaseValue, string pBaseUnitName, string pConvertUnitName)
+        {
+            // 速度許容差の基準単位確認
+            var speed = Quantities.FirstOrDefault(q => q.Name == pBaseUnitName);
+            var baseUnitName = speed?.BaseUnitName;
+
+            // 換算係数を取得
+            var baseUnit = BaseUnits.FirstOrDefault(b => b.Name == baseUnitName);
+            var kmh = baseUnit?.Units.FirstOrDefault(u => u.Name == pConvertUnitName);
+
+            double gain = kmh?.Gain ?? 1.0;
+            double offset = kmh?.Offset ?? 0.0;
+
+            return pBaseValue * gain + offset;
+        }
+        #endregion
     }
 
     internal class BaseUnitDefinition

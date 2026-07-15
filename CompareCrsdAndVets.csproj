@@ -64,6 +64,7 @@
     <Compile Include="Class\Trace.cs" />
     <Compile Include="Common\CommonMethods.cs" />
     <Compile Include="Common\Const.cs" />
+    <Compile Include="Common\DataPerser.cs" />
     <Compile Include="Common\Logger.cs" />
     <Compile Include="Common\Message.cs" />
     <Compile Include="Common\Xml.cs" />

@@ -71,9 +71,20 @@ namespace CompareCrsdAndVets.Common
         public static string GetParentPath(string path)
         {
             if (string.IsNullOrEmpty(path)) return string.Empty;
-            if (!Directory.Exists(path)) return string.Empty;
-            DirectoryInfo directory = new DirectoryInfo(path);
-            return directory.Parent.FullName;
+
+            if (Directory.Exists(path))
+            {
+                DirectoryInfo directory = new DirectoryInfo(path);
+                return directory.Parent.FullName;
+            }
+
+            if (File.Exists(path))
+            {
+                FileInfo file = new FileInfo(path);
+                return file.Directory.FullName;
+            }
+
+            return string.Empty;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace CompareCrsdAndVets.Common
         public const int OutputFileExcelCol = 7;
 
         /// <summary>Excel出力列数(TraceStartデータ用)</summary>
-        public const int OutputTraceStartExcelCol = 2;
+        public const int OutputTraceStartExcelCol = 3;
 
         /// <summary>出力結果ファイル名</summary>
         public const string FileName_OutputTsv = "CompareResult.tsv";
@@ -25,6 +25,9 @@ namespace CompareCrsdAndVets.Common
 
         /// <summary>出力結果ファイル名(TraceStartデータ用)</summary>
         public const string FileName_OutputTraceStartTsv = "TraceStart.tsv";
+
+        /// <summary>出力結果ファイル名(TraceStartデータ用)</summary>
+        public const string FileName_OutputSampleTimeTsv = "SampleTime.tsv";
 
         /// <summary>shift_jisエンコーディング</summary>
         public static readonly Encoding SJiEnc = Encoding.GetEncoding("shift_jis");
@@ -61,7 +64,8 @@ namespace CompareCrsdAndVets.Common
         public enum ExcelCols_TraceStart
         {
             Name = 1,
-            TraceStart = 2
+            TestModeName = 2,
+            TraceStart = 3
         };
 
         /// <summary>フェーズタイプ</summary>
@@ -91,6 +95,11 @@ namespace CompareCrsdAndVets.Common
         public const string CrsdName = "CRSD-7000";
         public const string VetsName = "STARS VETS";
 
+        public const string TestProcedure = "テストプロシージャ";
+        public const string Trace = "トレース";
+        public const string TraceVectors = "TraceVectors";
+        public const string MassData = "MassData";
+
         #region "Excel出力定義"
 
         public const string Title_Name = "名前";
@@ -113,7 +122,25 @@ namespace CompareCrsdAndVets.Common
         public const string TitleFile_Message = "メッセージ";
 
         public const string TitleTraceStart_Name = "ファイル名";
+        public const string TitleTraceStart_TestModeName = "テストモードファイル名";
         public const string TitleTraceStart_TraceStart = "トレース開始";
+
+        public const string TitleSample_Name = "VETSファイル名";
+        public const string TitleSample_TestModeName = "テストモードファイル名";
+        public const string TitleSample_BagSampleTime_CRSD = "BAGサンプル時間(CRSD)";
+        public const string TitleSample_BagSampleTime_CRSD1 = TitleSample_BagSampleTime_CRSD + "1";
+        public const string TitleSample_BagSampleTime_CRSD2 = TitleSample_BagSampleTime_CRSD + "2";
+        public const string TitleSample_BagSampleTime_CRSD3 = TitleSample_BagSampleTime_CRSD + "3";
+        public const string TitleSample_BagSampleTime_CRSD4 = TitleSample_BagSampleTime_CRSD + "4";
+        public const string TitleSample_BagSampleTime_VETS = "BAGサンプル時間(VETS)";
+        public const string TitleSample_BagSampleTime_VETS1 = TitleSample_BagSampleTime_VETS + "1";
+        public const string TitleSample_BagSampleTime_VETS2 = TitleSample_BagSampleTime_VETS + "2";
+        public const string TitleSample_BagSampleTime_VETS3 = TitleSample_BagSampleTime_VETS + "3";
+        public const string TitleSample_BagSampleTime_VETS4 = TitleSample_BagSampleTime_VETS + "4";
+
+        public const int SampleStart_Crsd = 2;
+        public const int SampleStart_Vets = 6;
+        public const int SampleMaxNum = 4;
 
         public const string ItemName_All = "全体結果";
         public const string BlockName_DriveUnit = "ドライブユニット設定";

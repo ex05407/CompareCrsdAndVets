@@ -18,6 +18,9 @@ namespace CompareCrsdAndVets.Class
         /// <summary>イベントアクション</summary>
         public List<EventActionDefinition> EventActions { get; set; } = new List<EventActionDefinition>();
 
+        /// <summary>開始時間</summary>
+        public double StartTime { get; set; }
+
         /// <summary>PendantButton</summary>
         private string _pendantButton;
         /// <summary>PendantButton</summary>
@@ -35,19 +38,27 @@ namespace CompareCrsdAndVets.Class
         }
 
         /// <summary>時間(s)</summary>
-        private double? _time = null;
-        /// <summary>時間(s)</summary>
         public double Time
         {
             get
             {
-                _time = ToDouble(GetParameterValue("Time"), 0);
-                return _time.Value;
+                return ToDouble(GetParameterValue("Time"), 0);
+            }
+        }
+
+        public int TraceSegment
+        {
+            get
+            {
+                return ToInt(GetParameterValue("TraceSegment"), 0);
             }
         }
 
         /// <summary>トリガーが時間系かどうか</summary>
         public bool IsTimeTrigger { get => (TriggerName == TriggerName_Time || TriggerName == TriggerName_TraceSegmentStart || TriggerName == TriggerName_TraceFinish); }
+
+        /// <summary>EmissionSampleかどうか</summary>
+        public bool IsEmissionSample { get => EventActions != null && EventActions.Exists(a => a.IsStartAction || a.IsEndAction); }
 
         /// <summary>
         /// 指定されたパラメータIDに対応するパラメータの値を取得
