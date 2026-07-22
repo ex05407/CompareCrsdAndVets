@@ -1,0 +1,10 @@
+<config>
+  <application>
+    <Item>
+      <ConfigType>Normal</ConfigType>
+      <Name>TestType</Name>
+      <Title>テスト種別</Title>
+      <FieldType>String</FieldType>
+    </Item>
+  </application>
+</config>

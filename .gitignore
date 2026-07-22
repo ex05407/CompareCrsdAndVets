@@ -3,6 +3,9 @@
 ################################################################################
 
 /.vs
-/bin
-/obj
+/Projects/CompareCrsdAndVets/bin
 /Projects/CompareCrsdAndVets/obj
+/Projects/CheckTestProcedures/bin
+/Projects/CheckTestProcedures/obj
+/Projects/CheckTestProcedures/.vs
+/bin

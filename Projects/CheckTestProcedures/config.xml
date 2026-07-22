@@ -1,0 +1,10 @@
+<config>
+  <application>
+    <Item>
+      <Name>TestType</Name>
+      <Title>テスト種別</Title>
+      <XmlPath>Resource\Private\TestType</XmlPath>
+      <FieldType>String</XmlPath>
+    </Item>
+  </application>
+</config>

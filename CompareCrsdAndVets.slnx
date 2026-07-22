@@ -1,3 +1,6 @@
 <Solution>
+  <Project Path="Projects/CheckTestProcedures/CheckTestProcedures.csproj" Id="50fb0d71-10b8-4fa2-a622-08697c0e2b70">
+    <Build Solution="Release|*" Project="false" />
+  </Project>
   <Project Path="Projects/CompareCrsdAndVets/CompareCrsdAndVets.csproj" Id="ae6e0f0c-a884-4283-9b17-abe3094039dd" />
 </Solution>

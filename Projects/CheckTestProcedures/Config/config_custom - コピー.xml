@@ -1,0 +1,18 @@
+<config>
+  <Groups>
+    <Group>
+      <Index>1</Index>
+      <Name>基本情報</Name>
+    </Group>
+  </Groups>
+  <Items>
+    <Item>
+      <Index>1</Index>
+      <Category></Category>
+      <SabCategory></SabCategory>
+      <Group></Group>
+      <Name>名前</Name>
+      <FieldName>テストプロシージャ名</FieldName>
+    </Item>
+  </Items>
+</config>

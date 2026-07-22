@@ -1,0 +1,268 @@
+テストプロシージャ名	大項目	中項目	小項目	項目名	出力内容
+CFO_CAL_1Bag	-	-	-	名前	CFO_CAL_1Bag
+CFO_CAL_1Bag	-	-	-	テスト種別	Standard
+CFO_CAL_1Bag	-	-	-	規制	Example
+CFO_CAL_1Bag	-	-	-	排出重量重み付け方法	
+CFO_CAL_1Bag	-	-	-	速度単位	km/h
+CFO_CAL_1Bag	-	-	-	RCB補正基準（率）	0
+CFO_CAL_1Bag	-	-	-	ダウンスケーリング	
+CFO_CAL_1Bag	-	-	-	最大合計休憩時間（min）	0
+CFO_CAL_1Bag	-	-	-	ドライバーズエイド許容幅の表示	TRUE
+CFO_CAL_1Bag	-	-	-	ドライバーズエイド基準速度の表示	TRUE
+CFO_CAL_1Bag	-	-	-	ドライバーズエイドレイアウト	DriveUnit
+CFO_CAL_1Bag	-	-	-	車両冷却ファン制御モード	一定速度制御
+CFO_CAL_1Bag	-	-	-	ドライバーズエイド時間スケールの最小値(s)	-10
+CFO_CAL_1Bag	-	-	-	ドライバーズエイド時間スケールの最大値(s)	20
+CFO_CAL_1Bag	-	-	-	コーストダウン設定	
+CFO_CAL_1Bag	-	-	-	ドライバーズエイド許容幅をトレースで定義	FALSE
+CFO_CAL_1Bag	-	-	-	運転エラーの回数制限	FALSE
+CFO_CAL_1Bag	-	-	-	運転エラー最大許容回数	10
+CFO_CAL_1Bag	ドライブユニット設定1	-	-	名前	DriveUnit
+CFO_CAL_1Bag	ドライブユニット設定1	-	-	速度許容差(km/h)	2
+CFO_CAL_1Bag	ドライブユニット設定1	-	-	時間許容差(s)	1
+CFO_CAL_1Bag	ドライブユニット設定1	-	-	時間許容差外時間(s)	0
+CFO_CAL_1Bag	ドライブユニット設定1	-	-	トレースの開始	ペンダントStart
+CFO_CAL_1Bag	ドライブユニット設定1	-	-	ブロックの終了	トレース終了
+CFO_CAL_1Bag	ドライブユニット設定1	-	-	ドライバーズエイド最低速度（km/h）	0
+CFO_CAL_1Bag	ドライブユニット設定1	-	-	ドライバーズエイド最高速度（km/h）	0
+CFO_CAL_1Bag	ドライブユニット設定1	トレース	トレース1	トレース名	CFO CAL
+CFO_CAL_1Bag	ドライブユニット設定1	トレース	トレース1	トレース時間	300
+CFO_CAL_1Bag	ドライブユニット設定1	イベント1	-	トリガー	PendantButton
+CFO_CAL_1Bag	ドライブユニット設定1	イベント1	-	PendantButton	Start
+CFO_CAL_1Bag	ドライブユニット設定1	イベント1	-	DelayTime（s）	0
+CFO_CAL_1Bag	ドライブユニット設定1	イベント1	開始　Emission Sample	サンプル番号	1
+CFO_CAL_1Bag	ドライブユニット設定1	イベント1	開始　Emission Sample	バッグペア番号	1
+CFO_CAL_1Bag	ドライブユニット設定1	イベント1	開始　Emission Sample	PMフィルタ番号	1
+CFO_CAL_1Bag	ドライブユニット設定1	イベント1	開始　Emission Sample	NMOGサンプラー番号	1
+CFO_CAL_1Bag	ドライブユニット設定1	イベント1	開始　Emission Sample	サンプルタイプ	Standard
+CFO_CAL_1Bag	ドライブユニット設定1	イベント1	開始　Emission Sample	理論距離(km)	0
+CFO_CAL_1Bag	ドライブユニット設定1	イベント2	-	トリガー	TraceFinish
+CFO_CAL_1Bag	ドライブユニット設定1	イベント2	-	時間(s)	0
+CFO_CAL_1Bag	ドライブユニット設定1	イベント2	終了　Emission Sample	サンプル番号	1
+CFO_CAL_1Bag	ドライブユニット設定1	イベント2	終了　Emission Sample	バッグペア番号	1
+CFO_CAL_1Bag	ドライブユニット設定1	イベント2	終了　Emission Sample	PMフィルタ番号	1
+CFO_CAL_1Bag	ドライブユニット設定1	イベント2	終了　Emission Sample	NMOGサンプラー番号	1
+CFO_CAL_1Bag	ドライブユニット設定1	イベント2	終了　Emission Sample	サンプルタイプ	Standard
+CFO_CAL_1Bag	ドライブユニット設定1	イベント2	終了　Emission Sample	理論距離(km)	0
+CFO_CAL_1Bag	カスタムフィールド	-	-	テストモードコード	9999
+CFO_CAL_1Bag	カスタムフィールド	-	-	テストモードグループコード	9999
+CFO_CAL_1Bag	カスタムフィールド	-	-	テストモード名	
+CFO_CAL_1Bag	カスタムフィールド	-	-	テストモードファイル名	CFO_CAL_1BAG
+CFO_CAL_1Bag	カスタムフィールド	-	-	NETLAS帳票名	netlas_CFO_CAL.xls
+CFO_CAL_1Bag	カスタム情報	サンプル時間	-	BAGサンプル時間1	300
+CFO_CAL_1Bag	カスタム情報	トレース	トレース1	トレース名	CFO CAL
+CFO_CAL_1Bag	カスタム情報	トレース	トレース1	トレース時間	300
+CFO_CAL_3Bag	-	-	-	名前	CFO_CAL_3Bag
+CFO_CAL_3Bag	-	-	-	テスト種別	Standard
+CFO_CAL_3Bag	-	-	-	規制	Example
+CFO_CAL_3Bag	-	-	-	排出重量重み付け方法	
+CFO_CAL_3Bag	-	-	-	速度単位	km/h
+CFO_CAL_3Bag	-	-	-	RCB補正基準（率）	0
+CFO_CAL_3Bag	-	-	-	ダウンスケーリング	
+CFO_CAL_3Bag	-	-	-	最大合計休憩時間（min）	0
+CFO_CAL_3Bag	-	-	-	ドライバーズエイド許容幅の表示	TRUE
+CFO_CAL_3Bag	-	-	-	ドライバーズエイド基準速度の表示	TRUE
+CFO_CAL_3Bag	-	-	-	ドライバーズエイドレイアウト	DriveUnit
+CFO_CAL_3Bag	-	-	-	車両冷却ファン制御モード	一定速度制御
+CFO_CAL_3Bag	-	-	-	ドライバーズエイド時間スケールの最小値(s)	-10
+CFO_CAL_3Bag	-	-	-	ドライバーズエイド時間スケールの最大値(s)	20
+CFO_CAL_3Bag	-	-	-	コーストダウン設定	
+CFO_CAL_3Bag	-	-	-	ドライバーズエイド許容幅をトレースで定義	FALSE
+CFO_CAL_3Bag	-	-	-	運転エラーの回数制限	FALSE
+CFO_CAL_3Bag	-	-	-	運転エラー最大許容回数	10
+CFO_CAL_3Bag	ドライブユニット設定1	-	-	名前	DriveUnit
+CFO_CAL_3Bag	ドライブユニット設定1	-	-	速度許容差(km/h)	2
+CFO_CAL_3Bag	ドライブユニット設定1	-	-	時間許容差(s)	1
+CFO_CAL_3Bag	ドライブユニット設定1	-	-	時間許容差外時間(s)	0
+CFO_CAL_3Bag	ドライブユニット設定1	-	-	トレースの開始	ペンダントStart
+CFO_CAL_3Bag	ドライブユニット設定1	-	-	ブロックの終了	トレース終了
+CFO_CAL_3Bag	ドライブユニット設定1	-	-	ドライバーズエイド最低速度（km/h）	0
+CFO_CAL_3Bag	ドライブユニット設定1	-	-	ドライバーズエイド最高速度（km/h）	0
+CFO_CAL_3Bag	ドライブユニット設定1	トレース	トレース1	トレース名	CFO CAL
+CFO_CAL_3Bag	ドライブユニット設定1	トレース	トレース1	トレース時間	300
+CFO_CAL_3Bag	ドライブユニット設定1	トレース	トレース2	トレース名	CFO CAL
+CFO_CAL_3Bag	ドライブユニット設定1	トレース	トレース2	トレース時間	300
+CFO_CAL_3Bag	ドライブユニット設定1	トレース	トレース3	トレース名	CFO CAL
+CFO_CAL_3Bag	ドライブユニット設定1	トレース	トレース3	トレース時間	300
+CFO_CAL_3Bag	ドライブユニット設定1	イベント1	-	トリガー	PendantButton
+CFO_CAL_3Bag	ドライブユニット設定1	イベント1	-	PendantButton	Start
+CFO_CAL_3Bag	ドライブユニット設定1	イベント1	-	DelayTime（s）	0
+CFO_CAL_3Bag	ドライブユニット設定1	イベント1	開始　Emission Sample	サンプル番号	1
+CFO_CAL_3Bag	ドライブユニット設定1	イベント1	開始　Emission Sample	バッグペア番号	1
+CFO_CAL_3Bag	ドライブユニット設定1	イベント1	開始　Emission Sample	PMフィルタ番号	1
+CFO_CAL_3Bag	ドライブユニット設定1	イベント1	開始　Emission Sample	NMOGサンプラー番号	1
+CFO_CAL_3Bag	ドライブユニット設定1	イベント1	開始　Emission Sample	サンプルタイプ	Standard
+CFO_CAL_3Bag	ドライブユニット設定1	イベント1	開始　Emission Sample	理論距離(km)	0
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	-	トリガー	時間
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	-	時間(s)	300
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	終了　Emission Sample	サンプル番号	1
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	終了　Emission Sample	バッグペア番号	1
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	終了　Emission Sample	PMフィルタ番号	1
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	終了　Emission Sample	NMOGサンプラー番号	1
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	終了　Emission Sample	サンプルタイプ	Standard
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	終了　Emission Sample	理論距離(km)	0
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	開始　Emission Sample	サンプル番号	2
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	開始　Emission Sample	バッグペア番号	2
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	開始　Emission Sample	PMフィルタ番号	2
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	開始　Emission Sample	NMOGサンプラー番号	2
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	開始　Emission Sample	サンプルタイプ	Standard
+CFO_CAL_3Bag	ドライブユニット設定1	イベント2	開始　Emission Sample	理論距離(km)	0
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	-	トリガー	時間
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	-	時間(s)	600
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	終了　Emission Sample	サンプル番号	2
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	終了　Emission Sample	バッグペア番号	2
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	終了　Emission Sample	PMフィルタ番号	2
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	終了　Emission Sample	NMOGサンプラー番号	2
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	終了　Emission Sample	サンプルタイプ	Standard
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	終了　Emission Sample	理論距離(km)	0
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	開始　Emission Sample	サンプル番号	3
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	開始　Emission Sample	バッグペア番号	3
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	開始　Emission Sample	PMフィルタ番号	3
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	開始　Emission Sample	NMOGサンプラー番号	3
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	開始　Emission Sample	サンプルタイプ	Standard
+CFO_CAL_3Bag	ドライブユニット設定1	イベント3	開始　Emission Sample	理論距離(km)	0
+CFO_CAL_3Bag	ドライブユニット設定1	イベント4	-	トリガー	TraceFinish
+CFO_CAL_3Bag	ドライブユニット設定1	イベント4	-	時間(s)	0
+CFO_CAL_3Bag	ドライブユニット設定1	イベント4	終了　Emission Sample	サンプル番号	3
+CFO_CAL_3Bag	ドライブユニット設定1	イベント4	終了　Emission Sample	バッグペア番号	3
+CFO_CAL_3Bag	ドライブユニット設定1	イベント4	終了　Emission Sample	PMフィルタ番号	3
+CFO_CAL_3Bag	ドライブユニット設定1	イベント4	終了　Emission Sample	NMOGサンプラー番号	3
+CFO_CAL_3Bag	ドライブユニット設定1	イベント4	終了　Emission Sample	サンプルタイプ	Standard
+CFO_CAL_3Bag	ドライブユニット設定1	イベント4	終了　Emission Sample	理論距離(km)	0
+CFO_CAL_3Bag	カスタムフィールド	-	-	テストモードコード	9999
+CFO_CAL_3Bag	カスタムフィールド	-	-	テストモードグループコード	9999
+CFO_CAL_3Bag	カスタムフィールド	-	-	テストモード名	
+CFO_CAL_3Bag	カスタムフィールド	-	-	テストモードファイル名	CFO_CAL_3BAG
+CFO_CAL_3Bag	カスタムフィールド	-	-	NETLAS帳票名	netlas_CFO_CAL.xls
+CFO_CAL_3Bag	カスタム情報	サンプル時間	-	BAGサンプル時間1	300
+CFO_CAL_3Bag	カスタム情報	サンプル時間	-	BAGサンプル時間2	300
+CFO_CAL_3Bag	カスタム情報	サンプル時間	-	BAGサンプル時間3	300
+CFO_CAL_3Bag	カスタム情報	トレース	トレース1	トレース名	CFO CAL
+CFO_CAL_3Bag	カスタム情報	トレース	トレース1	トレース時間	300
+CFO_CAL_3Bag	カスタム情報	トレース	トレース2	トレース名	CFO CAL
+CFO_CAL_3Bag	カスタム情報	トレース	トレース2	トレース時間	300
+CFO_CAL_3Bag	カスタム情報	トレース	トレース3	トレース名	CFO CAL
+CFO_CAL_3Bag	カスタム情報	トレース	トレース3	トレース時間	300
+EC_EPA75_4	-	-	-	名前	EC_EPA75_4
+EC_EPA75_4	-	-	-	速度単位	km/h
+EC_EPA75_4	-	-	-	テスト種別	Standard
+EC_EPA75_4	-	-	-	規制	Example
+EC_EPA75_4	-	-	-	排出重量重み付け方法	
+EC_EPA75_4	-	-	-	速度単位	km/h
+EC_EPA75_4	-	-	-	RCB補正基準（率）	0
+EC_EPA75_4	-	-	-	ダウンスケーリング	
+EC_EPA75_4	-	-	-	最大合計休憩時間（min）	0
+EC_EPA75_4	-	-	-	ドライバーズエイド許容幅の表示	TRUE
+EC_EPA75_4	-	-	-	ドライバーズエイド基準速度の表示	TRUE
+EC_EPA75_4	-	-	-	ドライバーズエイドレイアウト	DriveUnit
+EC_EPA75_4	-	-	-	車両冷却ファン制御モード	一定速度制御
+EC_EPA75_4	-	-	-	ドライバーズエイド時間スケールの最小値(s)	-10
+EC_EPA75_4	-	-	-	ドライバーズエイド時間スケールの最大値(s)	20
+EC_EPA75_4	-	-	-	コーストダウン設定	
+EC_EPA75_4	-	-	-	ドライバーズエイド許容幅をトレースで定義	FALSE
+EC_EPA75_4	-	-	-	運転エラーの回数制限	FALSE
+EC_EPA75_4	-	-	-	運転エラー最大許容回数	10
+EC_EPA75_4	ドライブユニット設定1	-	-	名前	DriveUnit
+EC_EPA75_4	ドライブユニット設定1	-	-	速度許容差(km/h)	2
+EC_EPA75_4	ドライブユニット設定1	-	-	時間許容差(s)	1
+EC_EPA75_4	ドライブユニット設定1	-	-	時間許容差外時間(s)	0
+EC_EPA75_4	ドライブユニット設定1	-	-	トレースの開始	ペンダントStart
+EC_EPA75_4	ドライブユニット設定1	-	-	ブロックの終了	トレース終了
+EC_EPA75_4	ドライブユニット設定1	-	-	ドライバーズエイド最低速度（km/h）	0
+EC_EPA75_4	ドライブユニット設定1	-	-	ドライバーズエイド最高速度（km/h）	48.28032
+EC_EPA75_4	ドライブユニット設定1	トレース	トレース1	トレース名	EPA75 P1
+EC_EPA75_4	ドライブユニット設定1	トレース	トレース1	トレース時間	505
+EC_EPA75_4	ドライブユニット設定1	トレース	トレース2	トレース名	EPA75 P2
+EC_EPA75_4	ドライブユニット設定1	トレース	トレース2	トレース時間	869
+EC_EPA75_4	ドライブユニット設定1	イベント1	-	トリガー	PendantButton
+EC_EPA75_4	ドライブユニット設定1	イベント1	-	PendantButton	Start
+EC_EPA75_4	ドライブユニット設定1	イベント1	-	DelayTime（s）	0
+EC_EPA75_4	ドライブユニット設定1	イベント1	開始　Emission Sample	サンプル番号	1
+EC_EPA75_4	ドライブユニット設定1	イベント1	開始　Emission Sample	バッグペア番号	1
+EC_EPA75_4	ドライブユニット設定1	イベント1	開始　Emission Sample	PMフィルタ番号	1
+EC_EPA75_4	ドライブユニット設定1	イベント1	開始　Emission Sample	NMOGサンプラー番号	1
+EC_EPA75_4	ドライブユニット設定1	イベント1	開始　Emission Sample	サンプルタイプ	Standard
+EC_EPA75_4	ドライブユニット設定1	イベント1	開始　Emission Sample	理論距離(km)	5.779
+EC_EPA75_4	ドライブユニット設定1	イベント2	-	トリガー	Time
+EC_EPA75_4	ドライブユニット設定1	イベント2	-	時間(s)	505
+EC_EPA75_4	ドライブユニット設定1	イベント2	終了　Emission Sample	サンプル番号	1
+EC_EPA75_4	ドライブユニット設定1	イベント2	終了　Emission Sample	バッグペア番号	1
+EC_EPA75_4	ドライブユニット設定1	イベント2	終了　Emission Sample	PMフィルタ番号	1
+EC_EPA75_4	ドライブユニット設定1	イベント2	終了　Emission Sample	NMOGサンプラー番号	1
+EC_EPA75_4	ドライブユニット設定1	イベント2	終了　Emission Sample	サンプルタイプ	Standard
+EC_EPA75_4	ドライブユニット設定1	イベント2	終了　Emission Sample	理論距離(km)	5.779
+EC_EPA75_4	ドライブユニット設定1	イベント2	開始　Emission Sample	サンプル番号	2
+EC_EPA75_4	ドライブユニット設定1	イベント2	開始　Emission Sample	バッグペア番号	2
+EC_EPA75_4	ドライブユニット設定1	イベント2	開始　Emission Sample	PMフィルタ番号	2
+EC_EPA75_4	ドライブユニット設定1	イベント2	開始　Emission Sample	NMOGサンプラー番号	2
+EC_EPA75_4	ドライブユニット設定1	イベント2	開始　Emission Sample	サンプルタイプ	Standard
+EC_EPA75_4	ドライブユニット設定1	イベント2	開始　Emission Sample	理論距離(km)	6.21
+EC_EPA75_4	ドライブユニット設定1	イベント3	-	トリガー	
+EC_EPA75_4	ドライブユニット設定1	イベント3	-	時間(s)	
+EC_EPA75_4	ドライブユニット設定1	イベント3	開始　Emission Sample	サンプル番号	2
+EC_EPA75_4	ドライブユニット設定1	イベント3	開始　Emission Sample	バッグペア番号	2
+EC_EPA75_4	ドライブユニット設定1	イベント3	開始　Emission Sample	PMフィルタ番号	2
+EC_EPA75_4	ドライブユニット設定1	イベント3	開始　Emission Sample	NMOGサンプラー番号	2
+EC_EPA75_4	ドライブユニット設定1	イベント3	開始　Emission Sample	サンプルタイプ	Standard
+EC_EPA75_4	ドライブユニット設定1	イベント3	開始　Emission Sample	理論距離(km)	6.21
+EC_EPA75_4	ソーク	-	-	名前	Soak
+EC_EPA75_4	ソーク	-	-	最小時間 (s)	540
+EC_EPA75_4	ソーク	-	-	最大時間 (s)	660
+EC_EPA75_4	ドライブユニット設定2	-	-	名前	DriveUnit1
+EC_EPA75_4	ドライブユニット設定2	-	-	速度許容差(km/h)	2
+EC_EPA75_4	ドライブユニット設定2	-	-	時間許容差(s)	1
+EC_EPA75_4	ドライブユニット設定2	-	-	時間許容差外時間(s)	0
+EC_EPA75_4	ドライブユニット設定2	-	-	トレースの開始	ペンダントRun
+EC_EPA75_4	ドライブユニット設定2	-	-	ブロックの終了	トレース終了
+EC_EPA75_4	ドライブユニット設定2	-	-	ドライバーズエイド最低速度（km/h）	0
+EC_EPA75_4	ドライブユニット設定2	-	-	ドライバーズエイド最高速度（km/h）	48.28032
+EC_EPA75_4	ドライブユニット設定2	トレース	トレース1	トレース名	EPA75 P3
+EC_EPA75_4	ドライブユニット設定2	トレース	トレース1	トレース時間	505
+EC_EPA75_4	ドライブユニット設定2	トレース	トレース2	トレース名	EPA75 P2
+EC_EPA75_4	ドライブユニット設定2	トレース	トレース2	トレース時間	869
+EC_EPA75_4	ドライブユニット設定2	イベント1	-	トリガー	PendantButton
+EC_EPA75_4	ドライブユニット設定2	イベント1	-	PendantButton	Start
+EC_EPA75_4	ドライブユニット設定2	イベント1	-	DelayTime（s）	0
+EC_EPA75_4	ドライブユニット設定2	イベント1	開始　Emission Sample	サンプル番号	3
+EC_EPA75_4	ドライブユニット設定2	イベント1	開始　Emission Sample	バッグペア番号	3
+EC_EPA75_4	ドライブユニット設定2	イベント1	開始　Emission Sample	PMフィルタ番号	3
+EC_EPA75_4	ドライブユニット設定2	イベント1	開始　Emission Sample	NMOGサンプラー番号	3
+EC_EPA75_4	ドライブユニット設定2	イベント1	開始　Emission Sample	サンプルタイプ	Standard
+EC_EPA75_4	ドライブユニット設定2	イベント1	開始　Emission Sample	理論距離(km)	5.779
+EC_EPA75_4	ドライブユニット設定2	イベント2	-	トリガー	Time
+EC_EPA75_4	ドライブユニット設定2	イベント2	-	時間(s)	505
+EC_EPA75_4	ドライブユニット設定2	イベント2	終了　Emission Sample	サンプル番号	3
+EC_EPA75_4	ドライブユニット設定2	イベント2	終了　Emission Sample	バッグペア番号	3
+EC_EPA75_4	ドライブユニット設定2	イベント2	終了　Emission Sample	PMフィルタ番号	3
+EC_EPA75_4	ドライブユニット設定2	イベント2	終了　Emission Sample	NMOGサンプラー番号	3
+EC_EPA75_4	ドライブユニット設定2	イベント2	終了　Emission Sample	サンプルタイプ	Standard
+EC_EPA75_4	ドライブユニット設定2	イベント2	終了　Emission Sample	理論距離(km)	5.779
+EC_EPA75_4	ドライブユニット設定2	イベント2	開始　Emission Sample	サンプル番号	4
+EC_EPA75_4	ドライブユニット設定2	イベント2	開始　Emission Sample	バッグペア番号	4
+EC_EPA75_4	ドライブユニット設定2	イベント2	開始　Emission Sample	PMフィルタ番号	4
+EC_EPA75_4	ドライブユニット設定2	イベント2	開始　Emission Sample	NMOGサンプラー番号	4
+EC_EPA75_4	ドライブユニット設定2	イベント2	開始　Emission Sample	サンプルタイプ	Standard
+EC_EPA75_4	ドライブユニット設定2	イベント2	開始　Emission Sample	理論距離(km)	6.21
+EC_EPA75_4	ドライブユニット設定2	イベント3	-	トリガー	
+EC_EPA75_4	ドライブユニット設定2	イベント3	-	時間(s)	
+EC_EPA75_4	ドライブユニット設定2	イベント3	開始　Emission Sample	サンプル番号	4
+EC_EPA75_4	ドライブユニット設定2	イベント3	開始　Emission Sample	バッグペア番号	4
+EC_EPA75_4	ドライブユニット設定2	イベント3	開始　Emission Sample	PMフィルタ番号	4
+EC_EPA75_4	ドライブユニット設定2	イベント3	開始　Emission Sample	NMOGサンプラー番号	4
+EC_EPA75_4	ドライブユニット設定2	イベント3	開始　Emission Sample	サンプルタイプ	Standard
+EC_EPA75_4	ドライブユニット設定2	イベント3	開始　Emission Sample	理論距離(km)	6.21
+EC_EPA75_4	カスタムフィールド	-	-	テストモードコード	1
+EC_EPA75_4	カスタムフィールド	-	-	テストモードグループコード	81
+EC_EPA75_4	カスタムフィールド	-	-	テストモード名	LA4-CH
+EC_EPA75_4	カスタムフィールド	-	-	テストモードファイル名	EC_EPA75_4
+EC_EPA75_4	カスタムフィールド	-	-	NETLAS帳票名	netlas一般輸出4BAG.xls
+EC_EPA75_4	カスタム情報	サンプル時間	-	BAGサンプル時間1	1369
+EC_EPA75_4	カスタム情報	サンプル時間	-	BAGサンプル時間2	1369
+EC_EPA75_4	カスタム情報	トレース	トレース1	トレース名	EPA75 P1
+EC_EPA75_4	カスタム情報	トレース	トレース1	トレース時間	505
+EC_EPA75_4	カスタム情報	トレース	トレース2	トレース名	EPA75 P2
+EC_EPA75_4	カスタム情報	トレース	トレース2	トレース時間	869
+EC_EPA75_4	カスタム情報	トレース	トレース3	トレース名	EPA75 P3
+EC_EPA75_4	カスタム情報	トレース	トレース3	トレース時間	505
+EC_EPA75_4	カスタム情報	トレース	トレース4	トレース名	EPA75 P2
+EC_EPA75_4	カスタム情報	トレース	トレース4	トレース時間	869
